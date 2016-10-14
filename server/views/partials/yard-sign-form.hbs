@@ -1,0 +1,35 @@
+<form class="pure-form pure-form-aligned" role="form" method="post">
+{{#if error}}
+    <div class="pure-control-group">
+        <div class="form-validation-message"><strong>Ahem.</strong> {{error}}</div>
+    </div>
+{{/if}}
+    <div class="form-control-group pure-g">
+      <div class="pure-u-1 pure-u-sm-4-24"><label for="name" class="control-label">Your Name</label></div>
+      <div class="pure-u-1 pure-u-sm-20-24"><input type="text" id="name" name="name" class="form-control pure-input-1" placeholder="John Smith" value="{{fields.name}}" required></div>
+    </div>
+
+    <div class="form-control-group pure-g">
+      <div class="pure-u-1 pure-u-sm-4-24"><label for="address" class="control-label">Address</label></div>
+      <div class="pure-u-1 pure-u-sm-20-24"><input type="text" pattern="^\d+\s+\S+" id="address" name="address" class="form-control pure-input-1" placeholder="555 Main St" value="{{fields.address}}" oninvalid="this.setCustomValidity('Please enter a valid Iowa City address in the following format: 555 Main St')" onchange="this.setCustomValidity('')" required></div>
+    </div>
+
+    <div class="form-control-group pure-g">
+      <div class="pure-u-1 pure-u-sm-4-24"><label for="email" class="control-label">Email</label></div>
+      <div class="pure-u-1 pure-u-sm-10-24"><input type="email" id="email" name="email" class="form-control pure-input-1" placeholder="john.smith@gmail.com" value="{{fields.email}}"></div>
+      <div class="pure-u-1 pure-u-sm-5-24"><label for="phone" class="control-label">&hellip;or phone #</label></div>
+      <div class="pure-u-1 pure-u-sm-5-24"><input type="tel" pattern="^(\d{3}[-.])?\d{3}[-.]\d{4}$" id="phone" name="phone" class="form-control pure-input-1" placeholder="319-555-5555" value="{{fields.phone}}" oninvalid="this.setCustomValidity('Please enter a phone # in the following format: 319-555-5555')" onchange="this.setCustomValidity('')"></div>
+    </div>
+
+    <div class="form-control-group pure-g">
+      <div class="pure-u-1 pure-u-sm-4-24"><label for="numberOfSigns" class="control-label"># of Signs</label></div>
+      <div class="pure-u-1 pure-u-sm-3-24"><input type="number" min="1" max="10" id="numberOfSigns" name="numberOfSigns" class="form-control pure-input-1" placeholder="1" value="{{fields.numberOfSigns}}" required></div>
+      <div class="pure-u-1 pure-u-sm-5-24"><label for="notes" class="control-label">Delivery notes</label></div>
+      <div class="pure-u-1 pure-u-sm-12-24"><input type="text" id="notes" name="notes" class="form-control pure-input-1" placeholder="(optional)" value="{{fields.notes}}"></div>
+    </div>
+
+    <div class="form-control-group pure-g">
+        <div class="pure-u-1 pure-u-sm-16-24"></div>
+        <div class="pure-u-1 pure-u-sm-8-24"><button type="submit" class="pure-button form-button">Request Your Sign</button></div>
+    </div>
+</form>

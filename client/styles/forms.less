@@ -1,0 +1,73 @@
+.pure-form {
+  line-height: 1;
+  margin-top: 2em;
+
+  input.form-control {
+    color: black;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0.2em 0.2em 0.15em;
+    margin: 0 0.3em 1em 0;
+    box-shadow: 0 1px 0 0 @brand-color;
+
+    &:active, &:focus {
+      color: black;
+      box-shadow: 0 3px 0 0 @brand-color;
+    }
+
+    @media screen and (min-width: @pure-min-width-sm) {
+      margin: 0.4em 0 0 0;
+      padding: 0.4em 0.2em 0.15em;
+    }
+  }
+
+  label.control-label {
+    display: inline-block;
+    box-sizing: border-box;
+    color: @brand-color;
+    font-family: @header-font;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: 2px;
+    color: @brand-color;
+    margin: 0;
+    padding: 0.2em 0 0.3em 0;
+
+    @media screen and (min-width: @pure-min-width-sm) {
+      float: right;
+      margin: 0.3em 0.2em 0 0;
+      padding: 0.2em 0.3em;
+    }
+  }
+
+}
+
+.form-control-group {
+  margin-bottom: 0.5em;
+}
+
+.form-button {
+  margin-top: 1em;
+  background-color: @brand-color;
+  color: white;
+  font-family: @header-font;
+  font-size: 28px;
+  padding: 0.2em 0.8em;
+  border-radius: 3px;
+  border-bottom: 1px solid transparent;
+  float: right;
+
+  &:active {
+    border-top: 1px solid transparent;
+    border-bottom: 0;
+  }
+}
+
+.form-validation-message {
+  padding: 1em;
+  border-radius: 2px;
+  background-color: @brand-attention-color;
+  margin: 2em 0 1em;
+}
