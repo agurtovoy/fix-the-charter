@@ -14,6 +14,15 @@ app.engine( '.hbs', require('express-handlebars')( {
   partialsDir: app.get('views') + '/partials',
   helpers: {
     version: function() { return config.get( "build.version" ); },
+    clientKeys: function( key, options ) {
+      var fullKey = 'clientKeys.' + key;
+      if ( typeof options.fn === 'undefined' )
+        return config.get( fullKey );
+
+      return config.has( fullKey )
+        ? options.fn( this )
+        : options.inverse( this );
+    },
     equal: function( x, y, options ) { return x == y ? options.fn( this ) : options.inverse( this ); }
   }
 } ) );
