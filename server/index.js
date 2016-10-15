@@ -40,7 +40,18 @@ var publicDir = path.join( __dirname, '..', 'public' );
 app.use( express.static( publicDir ) );
 //app.use( require('serve-favicon')( path.join( publicDir, 'favicon.ico') ) );
 
-app.use( '/', require( './routes/index' ) );
+var router = require( './routes/index' );
+app.use( '/', router );
+
+var sitemap = require( 'express-sitemap' )( {
+  generate: router,
+  url: 'fix-the-charter.org',
+  cache: 600000,
+} );
+
+app.get('/sitemap.xml', function( req, res ) {
+  sitemap.XMLtoWeb( res );
+} );
 
 // 404
 app.use( function( req, res, next ) {
