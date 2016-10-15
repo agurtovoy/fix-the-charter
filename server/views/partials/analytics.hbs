@@ -26,7 +26,13 @@ if(!n._iq.hasOwnProperty(e)){n._iq[e]={_q:[]};v(n._iq[e])}return n._iq[e]};e.amp
 })(window,document);
 
 amplitude.getInstance().init( '{{{clientKeys "amplitude"}}}' );
-amplitude.getInstance().logEvent( "pageview", { page: "{{pageName}}" } );
+amplitude.getInstance().logEvent( 'pageview', { page: '{{pageName}}' } );
+</script>
+{{/clientKeys}}
+
+{{#clientKeys "shareaholic"}}
+<script data-cfasync='false' src='//dsms0mj1bbhn4.cloudfront.net/assets/pub/shareaholic.js'
+  data-shr-siteid='{{{clientKeys "shareaholic"}}}' async='async'>
 </script>
 {{/clientKeys}}
 

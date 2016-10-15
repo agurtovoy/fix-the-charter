@@ -35,7 +35,10 @@
 </head>
 <body class="page-{{pageName}}">
 {{> header}}
-{{{body}}}
+<div class="content-container">
+  {{> social-sidebar}}
+  {{{body}}}
+</div>
 {{> footer}}
 </body>
 </html>

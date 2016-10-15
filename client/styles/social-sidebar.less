@@ -1,0 +1,24 @@
+.social-sidebar {
+  float: left;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 25vh;
+  margin-top: 10em;
+  z-index: 900;
+  transition: opacity 0.2s;
+
+  & ul.shareaholic-share-buttons li.shareaholic-share-button i.shareaholic-service-icon {
+    font-size: 32px;
+    height: 50px;
+    width: 50px;
+  }
+
+  @media (max-width: 730px) {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  @media (max-width: 700px) {
+   display: none;
+  }
+}

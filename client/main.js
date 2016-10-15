@@ -6,6 +6,7 @@ var throttle = require( 'throttle-debounce/throttle' );
 $( document ).ready( function() {
   var stickyfill = Stickyfill();
   var headerNav = $('.header-nav');
+  stickyfill.add( $('.social-sidebar')[0] );
   stickyfill.add( headerNav[0] );
 
   function markAsSticky() {
