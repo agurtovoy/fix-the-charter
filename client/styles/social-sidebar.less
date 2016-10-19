@@ -8,9 +8,14 @@
   transition: opacity 0.2s;
 
   & ul.shareaholic-share-buttons li.shareaholic-share-button i.shareaholic-service-icon {
+    background-color: transparent !important;
     font-size: 32px;
     height: 50px;
     width: 50px;
+
+    &:before {
+      filter: drop-shadow(0 0 1px white) drop-shadow(0 0 5px white) drop-shadow(0 0 0 white);
+    }
   }
 
   @media (max-width: 730px) {
