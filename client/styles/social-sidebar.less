@@ -7,14 +7,24 @@
   z-index: 900;
   transition: opacity 0.2s;
 
-  & ul.shareaholic-share-buttons li.shareaholic-share-button i.shareaholic-service-icon {
-    background-color: transparent !important;
-    font-size: 32px;
-    height: 50px;
-    width: 50px;
+  & ul.shareaholic-share-buttons li.shareaholic-share-button .shareaholic-share-button-container {
+    &:hover {
+      opacity: 1 !important;
+    }
 
-    &:before {
-      filter: drop-shadow(0 0 1px white) drop-shadow(0 0 5px white) drop-shadow(0 0 0 white);
+    i.shareaholic-service-icon {
+      background-color: transparent !important;
+      font-size: 32px;
+      height: 50px;
+      width: 50px;
+
+      &:hover {
+        color: darken(@brand-color, 5%) !important;
+      }
+
+      &:before {
+        filter: drop-shadow(0 0 1px white) drop-shadow(0 0 5px white) drop-shadow(0 0 0 white);
+      }
     }
   }
 
