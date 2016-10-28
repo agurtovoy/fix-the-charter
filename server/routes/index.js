@@ -94,7 +94,9 @@ function yardSign( pageName, req, res ) {
 
 
 var router = express.Router();
-router.get( '/', page.bind( null, 'index' ) );
+var indexPage = '/iowa-city-public-measure-c'; // gives us a CEO boost
+router.get( '/', ( req, res, next ) => { return res.redirect( 301, indexPage + '/' ); } );
+router.get( indexPage, page.bind( null, 'index' ) );
 router.get( '/sample-ballot', page.bind( null, 'sample-ballot' ) );
 router.get( '/opinions', page.bind( null, 'opinions' ) );
 router.get( '/where-to-vote', page.bind( null, 'where-to-vote' ) );
