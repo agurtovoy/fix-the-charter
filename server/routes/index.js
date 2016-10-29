@@ -53,10 +53,12 @@ function requestUrl( req ) {
 function page( pageName, req, res, options ) {
   var settings = req.app.settings;
   var manifest = webpackManifest( settings );
+  var pageUrl = requestUrl( req );
   res.render( pageName, _.extend( {
     pageName: pageName,
+    pageUrl: pageUrl,
     manifest: _.object( [ 'css', 'js' ].map( ( x ) => [ x, manifest[ 'main.' + x ] ] ) ),
-    metadata: pageMetadata( settings, manifest, pageName, requestUrl( req ) )
+    metadata: pageMetadata( settings, manifest, pageName, pageUrl )
     }, options || {} ) );
 }
 
