@@ -37,6 +37,7 @@ app.use( require( 'express-validator' )() );
 app.use( require( 'cookie-parser' )() );
 
 var publicDir = path.join( __dirname, '..', 'public' );
+app.set( 'staticDir', publicDir );
 app.use( express.static( publicDir ) );
 //app.use( require('serve-favicon')( path.join( publicDir, 'favicon.ico') ) );
 

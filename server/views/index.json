@@ -1,0 +1,15 @@
+{
+  "title": "Public Measure C (Iowa City) — Official Website",
+  "description": "Strengthening our right to petition local government in Iowa City. Public Measure C is a proposal to reduce the number of signatures required for a citizen petition in Iowa City.",
+  "og": {
+    "type": "website",
+    "site_name": "fix-the-charter.org",
+    "url": "",
+    "image": "/images/cover-image-index.png"
+  },
+  "twitter": {
+    "card": "summary_large_image",
+    "site": "@fixthecharter",
+    "image": "/images/cover-image-index.png"
+  }
+}

@@ -1,16 +1,62 @@
-var express = require('express');
-var nodemailer = require('nodemailer');
-var sendGridTransport = require('nodemailer-sendgrid-transport');
-var humanname = require('humanname');
-var config = require('config');
-var util = require('util');
-var _ = require('underscore');
+var express = require( 'express' );
+var nodemailer = require( 'nodemailer' );
+var sendGridTransport = require( 'nodemailer-sendgrid-transport' );
+var humanname = require( 'humanname' );
+var config = require( 'config' );
+var jsonfile = require( 'jsonfile' );
+var url = require( 'url' );
+var mem = require( 'mem' );
+var path = require( 'path' );
+var util = require( 'util' );
+var _ = require( 'underscore' );
+
+
+var readFileSync = mem( ( path ) => { return jsonfile.readFileSync( path ); } );
+
+function readPageMetadata( settings, pageName ) {
+  return readFileSync( path.join( settings.views, pageName + '.json' ) );
+}
+
+function webpackManifest( settings ) {
+  return readFileSync( path.join( settings.staticDir, 'manifest.json' ) );
+}
+
+
+var pageMetadata = mem( ( settings, manifest, pageName, pageUrl ) => {
+  var defaults = readPageMetadata( settings, 'index' );
+  var result = pageName == 'index'
+    ? defaults
+    : _.defaults( readPageMetadata( settings, pageName ), defaults );
+
+  var pageDefaults = _.pick( result, 'title', 'description' );
+  [ 'og', 'twitter' ].forEach( ( card ) => {
+    _.defaults( result[card], defaults[card] );
+    _.defaults( result[card], pageDefaults );
+    result[card].image = manifest[ result[card].image ];
+    if ( 'url' in result[card] )
+      result[card].url = pageUrl;
+  } );
+
+  return result;
+} );
+
+
+function requestUrl( req ) {
+  return url.format( {
+    protocol: req.protocol,
+    hostname: req.hostname,
+    pathname: req.path
+  } );
+}
 
 
 function page( pageName, req, res, options ) {
+  var settings = req.app.settings;
+  var manifest = webpackManifest( settings );
   res.render( pageName, _.extend( {
     pageName: pageName,
-    title: 'Vote YES on Measure C',
+    manifest: _.object( [ 'css', 'js' ].map( ( x ) => [ x, manifest[ 'main.' + x ] ] ) ),
+    metadata: pageMetadata( settings, manifest, pageName, requestUrl( req ) )
     }, options || {} ) );
 }
 

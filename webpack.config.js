@@ -1,13 +1,13 @@
 var ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
-var config = require( 'config' );
-var buildVersion = config.get( "build.version" );
+var ManifestPlugin = require('webpack-manifest-plugin');
+var outputPath = './public/';
 
 module.exports = {
     entry: './client/main.js',
     output: {
-      path: './public/' + buildVersion,
-      publicPath: '/' + buildVersion,
-      filename: '[name].js'
+      path: outputPath,
+      publicPath: '',
+      filename: '[name].[chunkhash].js'
     },
     module: {
       loaders: [
@@ -25,7 +25,8 @@ module.exports = {
       ]
     },
     plugins: [
-       new ExtractTextPlugin( '/[name].css' )
+       new ExtractTextPlugin( '[name].[contenthash].css' ),
+       new ManifestPlugin()
     ],
     imageWebpackLoader: {
       pngquant: {

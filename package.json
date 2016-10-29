@@ -15,6 +15,8 @@
     "express-sitemap": "^1.6.5",
     "express-validator": "^2.20.10",
     "humanname": "^0.2.2",
+    "jsonfile": "^2.4.0",
+    "mem": "^1.1.0",
     "morgan": "~1.7.0",
     "nodemailer": "^2.6.4",
     "nodemailer-sendgrid-transport": "^0.2.0",
@@ -32,6 +34,7 @@
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.2"
+    "webpack": "^1.13.2",
+    "webpack-manifest-plugin": "^1.1.0"
   }
 }

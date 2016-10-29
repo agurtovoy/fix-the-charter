@@ -1,0 +1,12 @@
+{{#with metadata}}
+<title>{{title}}</title>
+<meta name="description" content="{{description}}">
+
+{{#each og}}
+<meta property="og:{{@key}}" content="{{this}}">
+{{/each}}
+
+{{#each twitter}}
+<meta property="twitter:{{@key}}" content="{{this}}">
+{{/each}}
+{{/with}}
