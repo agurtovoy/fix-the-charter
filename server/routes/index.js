@@ -32,7 +32,7 @@ var pageMetadata = mem( ( settings, manifest, pageName, pageUrl ) => {
   [ 'og', 'twitter' ].forEach( ( card ) => {
     _.defaults( result[card], defaults[card] );
     _.defaults( result[card], pageDefaults );
-    result[card].image = manifest[ result[card].image ];
+    result[card].image = url.resolve( pageUrl, manifest[ result[card].image ] );
     if ( 'url' in result[card] )
       result[card].url = pageUrl;
   } );
