@@ -5,7 +5,9 @@
     "type": "website",
     "site_name": "fix-the-charter.org",
     "url": "",
-    "image": "/images/cover-image-index.png"
+    "image": "/images/cover-image-index.png",
+    "image:width": 1656,
+    "image:height": 1656
   },
   "twitter": {
     "card": "summary_large_image",
