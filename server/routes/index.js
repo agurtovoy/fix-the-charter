@@ -148,4 +148,33 @@ router.get( '/opinions', page.bind( null, 'opinions' ) );
 router.get( '/where-to-vote', page.bind( null, 'where-to-vote' ) );
 router.all( '/yard-sign', yardSign.bind( null, 'yard-sign' ) );
 
+var sitemap = require( 'express-sitemap' )( {
+  generate: router,
+  url: 'fix-the-charter.org',
+  cache: 600000,
+} );
+
+router.get('/sitemap.xml', function( req, res ) {
+  sitemap.XMLtoWeb( res );
+} );
+
+
+// 404
+router.use( function( req, res, next ) {
+  res.status( 404 );
+  page( '404', req, res, { hideSocial: true } );
+} );
+
+router.use( function( err, req, res, next ) {
+  if ( req.app.get('env') != 'development' ) {
+      err = { status: 500, message: 'Internal Error' };
+  }
+  res.status( err.status || 500 );
+  page( 'error', req, res, {
+    message: err.message,
+    error: err,
+    hideSocial: true
+  } );
+} );
+
 module.exports = router;

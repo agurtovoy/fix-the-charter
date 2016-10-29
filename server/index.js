@@ -44,31 +44,4 @@ app.use( express.static( publicDir ) );
 var router = require( './routes/index' );
 app.use( '/', router );
 
-var sitemap = require( 'express-sitemap' )( {
-  generate: router,
-  url: 'fix-the-charter.org',
-  cache: 600000,
-} );
-
-app.get('/sitemap.xml', function( req, res ) {
-  sitemap.XMLtoWeb( res );
-} );
-
-// 404
-app.use( function( req, res, next ) {
-  res.status( 404 );
-  res.render( '404', {} );
-} );
-
-app.use( function( err, req, res, next ) {
-  if ( app.get('env') != 'development' ) {
-      err = { status: 500, message: 'Internal Error' };
-  }
-  res.status( err.status || 500 );
-  res.render( 'error', {
-    message: err.message,
-    error: err
-  } );
-} );
-
 module.exports = app;
