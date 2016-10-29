@@ -11,15 +11,15 @@ var util = require( 'util' );
 var _ = require( 'underscore' );
 
 
-var readFileSync = mem( ( path ) => { return jsonfile.readFileSync( path ); } );
+var readFileSync = ( ( path ) => { return jsonfile.readFileSync( path ); } );
 
 function readPageMetadata( settings, pageName ) {
   return readFileSync( path.join( settings.views, pageName + '.json' ) );
 }
 
-function webpackManifest( settings ) {
+var webpackManifest = mem( ( settings ) => {
   return readFileSync( path.join( settings.staticDir, 'manifest.json' ) );
-}
+} );
 
 
 var pageMetadata = mem( ( settings, manifest, pageName, pageUrl ) => {
