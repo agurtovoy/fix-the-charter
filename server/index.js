@@ -13,7 +13,6 @@ app.engine( '.hbs', require('express-handlebars')( {
   layoutsDir: app.get('views') + '/layouts',
   partialsDir: app.get('views') + '/partials',
   helpers: {
-    version: function() { return config.get( "build.version" ); },
     clientKeys: function( key, options ) {
       var fullKey = 'clientKeys.' + key;
       if ( typeof options.fn === 'undefined' )
