@@ -2,6 +2,7 @@ var express = require( 'express' );
 var nodemailer = require( 'nodemailer' );
 var sendGridTransport = require( 'nodemailer-sendgrid-transport' );
 var humanname = require( 'humanname' );
+var moment = require( 'moment' );
 var config = require( 'config' );
 var jsonfile = require( 'jsonfile' );
 var url = require( 'url' );
@@ -16,6 +17,16 @@ var readFileSync = ( ( path ) => { return jsonfile.readFileSync( path ); } );
 function readPageMetadata( settings, pageName ) {
   return readFileSync( path.join( settings.views, 'pages', pageName, 'metadata.json' ) );
 }
+
+
+var readPageContent = mem( ( settings, pageName ) => {
+  try {
+    return readFileSync( path.join( settings.views, 'pages', pageName, 'content.json' ) );
+  } catch ( x ) {
+    return {};
+  }
+} );
+
 
 var webpackManifest = mem( ( settings ) => {
   return readFileSync( path.join( settings.staticDir, 'manifest.json' ) );
@@ -59,9 +70,21 @@ function page( pageName, req, res, options ) {
     pageUrl: pageUrl,
     manifest: _.object( [ 'css', 'js' ].map( ( x ) => [ x, manifest[ 'main.' + x ] ] ) ),
     metadata: pageMetadata( settings, manifest, pageName, pageUrl )
-    }, options || {} ) );
+    }, _.extend( {}, options || {}, readPageContent( settings, pageName ) ) ) );
 }
 
+
+function opinions( pageName, req, res ) {
+  var settings = req.app.settings;
+  var content = readPageContent( settings, pageName );
+  content.opinions = _.sortBy(
+    content.opinions,
+    req.query.sort == 'rank'
+      ? ( x ) => { return -x.rank; }
+      : ( x ) => { return -moment( x.date ).valueOf(); }
+  );
+  page.call( this, pageName, req, res, content );
+}
 
 function sendEmail( fields ) {
     var transport = nodemailer.createTransport( sendGridTransport( {
@@ -146,7 +169,7 @@ var indexPage = '/iowa-city-public-measure-c'; // gives us a CEO boost
 router.get( '/', ( req, res, next ) => { return res.redirect( 301, indexPage + '/' ); } );
 router.get( indexPage, page.bind( null, 'index' ) );
 router.get( '/sample-ballot', page.bind( null, 'sample-ballot' ) );
-router.get( '/opinions', page.bind( null, 'opinions' ) );
+router.get( '/opinions', opinions.bind( null, 'opinions' ) );
 router.get( '/where-to-vote', page.bind( null, 'where-to-vote' ) );
 router.all( '/yard-sign', yardSign.bind( null, 'yard-sign' ) );
 

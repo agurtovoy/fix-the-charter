@@ -17,6 +17,7 @@
     "humanname": "^0.2.2",
     "jsonfile": "^2.4.0",
     "mem": "^1.1.0",
+    "moment": "^2.15.2",
     "morgan": "~1.7.0",
     "nodemailer": "^2.6.4",
     "nodemailer-sendgrid-transport": "^0.2.0",

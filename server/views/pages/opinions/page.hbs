@@ -1,0 +1,17 @@
+<div class="content">
+  <section class="content-section">
+      <p class="section-text">
+        A grass roots initiative by ordinary Iowa City citizens, Public Measure C has
+        generated broad community support across social and political lines. Here's what our fellow citizens have to say:
+      </p>
+  </section>
+<section class="article-list">
+  {{#each opinions}}
+  <a class="article" href="{{href}}" target="_blank">
+    <h2 class="article-title">{{title}}</h2>
+    <p class="article-info">{{author}}, {{date}} &bull; {{readTime}} min read</p>
+    <p class="article-blurb">{{blurb}}</p>
+  </a>
+  {{/each}}
+</section>
+</div>

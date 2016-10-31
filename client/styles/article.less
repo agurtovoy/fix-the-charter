@@ -1,0 +1,35 @@
+.article-list {
+  padding-top: 2em;
+}
+
+.article {
+  display: block;
+  padding: 1.2em 1em 1.5em 1em;
+  border-bottom: 1px solid lighten(@brand-color, 40%);
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+
+  &:hover {
+    background-color: lighten(@brand-color, 55%);
+  }
+
+  &:last-child {
+    border: 0;
+  }
+}
+
+.article-title {
+  margin: 0;
+  line-height: 0.9em;
+}
+
+.article-info {
+  margin: 0.2em 0;
+  color: #707070;
+  font-size: 0.9em;
+}
+
+.article-blurb {
+  margin: 0.7em 0 0;
+}
