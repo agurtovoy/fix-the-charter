@@ -14,7 +14,7 @@ var _ = require( 'underscore' );
 var readFileSync = ( ( path ) => { return jsonfile.readFileSync( path ); } );
 
 function readPageMetadata( settings, pageName ) {
-  return readFileSync( path.join( settings.views, pageName + '.json' ) );
+  return readFileSync( path.join( settings.views, 'pages', pageName, 'metadata.json' ) );
 }
 
 var webpackManifest = mem( ( settings ) => {
@@ -54,7 +54,7 @@ function page( pageName, req, res, options ) {
   var settings = req.app.settings;
   var manifest = webpackManifest( settings );
   var pageUrl = requestUrl( req );
-  res.render( pageName, _.extend( {
+  res.render( path.join( 'pages', pageName, 'page' ), _.extend( {
     pageName: pageName,
     pageUrl: pageUrl,
     manifest: _.object( [ 'css', 'js' ].map( ( x ) => [ x, manifest[ 'main.' + x ] ] ) ),
