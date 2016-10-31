@@ -70,21 +70,34 @@ function page( pageName, req, res, options ) {
     pageUrl: pageUrl,
     manifest: _.object( [ 'css', 'js' ].map( ( x ) => [ x, manifest[ 'main.' + x ] ] ) ),
     metadata: pageMetadata( settings, manifest, pageName, pageUrl )
-    }, _.extend( {}, options || {}, readPageContent( settings, pageName ) ) ) );
+  }, _.defaults( {}, options || {}, readPageContent( settings, pageName ) ) ) );
 }
 
+
+function formatDate( date ) {
+  var x = moment( date );
+  return moment().dayOfYear() - x.dayOfYear() > 5 ? x.format( 'MMM D' ) : x.fromNow();
+}
+
+var opinionsContent = mem( ( settings, pageName, query ) => {
+  var result = _.clone( readPageContent( settings, pageName ) );
+  result.opinions = _.sortBy(
+    result.opinions,
+    query.sort == 'rank'
+      ? ( x ) => { return -x.rank; }
+      : ( x ) => { return -moment( x.date ).valueOf(); }
+    ).map( ( x ) => {
+      return _.extend( _.clone( x ), { date: formatDate( x.date ) } );
+    } );
+
+  return result;
+} );
 
 function opinions( pageName, req, res ) {
   var settings = req.app.settings;
-  var content = readPageContent( settings, pageName );
-  content.opinions = _.sortBy(
-    content.opinions,
-    req.query.sort == 'rank'
-      ? ( x ) => { return -x.rank; }
-      : ( x ) => { return -moment( x.date ).valueOf(); }
-  );
-  page.call( this, pageName, req, res, content );
+  page.call( this, pageName, req, res, opinionsContent( settings, pageName, req.query ) );
 }
+
 
 function sendEmail( fields ) {
     var transport = nodemailer.createTransport( sendGridTransport( {
