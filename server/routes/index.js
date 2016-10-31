@@ -177,17 +177,30 @@ function yardSign( pageName, req, res ) {
 }
 
 
-var router = express.Router();
 var indexPage = '/iowa-city-public-measure-c'; // gives us a CEO boost
-router.get( '/', ( req, res, next ) => { return res.redirect( 301, indexPage + '/' ); } );
-router.get( indexPage, page.bind( null, 'index' ) );
-router.get( '/sample-ballot', page.bind( null, 'sample-ballot' ) );
-router.get( '/opinions', opinions.bind( null, 'opinions' ) );
-router.get( '/where-to-vote', page.bind( null, 'where-to-vote' ) );
-router.all( '/yard-sign', yardSign.bind( null, 'yard-sign' ) );
+
+function redirect( target, req, res ) {
+  return res.redirect( 301, target );
+}
+
+function pageRoute( router, path, page, pageName, verb ) {
+  verb = verb || 'get';
+  router[verb]( path, redirect.bind( null, indexPage + path ) );
+  router[verb]( indexPage + path, page.bind( null, pageName ) );
+  router.sitemapRoute[path] = { hide: true };
+}
+
+var router = express.Router();
+router.sitemapRoute = {};
+pageRoute( router, '/', page, 'index' );
+pageRoute( router, '/sample-ballot', page, 'sample-ballot' );
+pageRoute( router, '/opinions', opinions, 'opinions' );
+pageRoute( router, '/where-to-vote', page, 'where-to-vote' );
+pageRoute( router, '/yard-sign', yardSign, 'yard-sign', 'all' );
 
 var sitemap = require( 'express-sitemap' )( {
   generate: router,
+  route: router.sitemapRoute,
   url: 'fix-the-charter.org',
   cache: 600000,
 } );
