@@ -12,6 +12,12 @@
 
   &:hover {
     background-color: lighten(@brand-color, 55%);
+    .article-info {
+      color: #505050;
+    }
+    .article-blurb:after {
+      color: #707070;
+    }
   }
 
   &:last-child {
@@ -32,4 +38,10 @@
 
 .article-blurb {
   margin: 0.7em 0 0;
+  &:after {
+    content: "→";
+    color: #a0a0a0;
+    padding-left: 0.4em;
+    font-style: italic;
+  }
 }
